@@ -20,7 +20,8 @@
 // div要素を作ってstopを表示stopクラスにstopを追加する
       this.stop = document.createElement('div');
       this.stop.textContent = 'STOP';
-      this.stop.classList.add('stop');
+// spinしていないのにstopが押せるので予めinactiveクラスをつける
+      this.stop.classList.add('stop', 'inactive');
 // stopボタンをクリックした時の処理
       this.stop.addEventListener('click', () => {
         if (this.stop.classList.contains('inactive')) {
@@ -34,6 +35,9 @@
 
 // panelsLeftが0になった時に結果の判定
         if (panelsLeft === 0) {
+// 結果判定をした後にspinボタンを押せるようにする
+          spin.classList.remove('inactive');
+          panelsLeft = 3;
           checkResult();
         }
       });
@@ -79,6 +83,12 @@
     unmatch() {
       this.img.classList.add('unmatched');
     }
+
+// spinボタンを押した後にunmatchedとinactiveを外す
+    activate() {
+      this.img.classList.remove('unmatched');
+      this.stop.classList.remove('inactive');
+    }
   }
 
 // 個々のパネルに関する処理ではなくパネル同士を比較する処理
@@ -118,6 +128,7 @@
 // パネルの画像を切り替える一つ一つの要素をpanelで受け取って次の処理をする
 // panelクラスのspinメソッドにまとめる
     panels.forEach(panel => {
+      panel.activate();
       panel.spin();
     });
   });
