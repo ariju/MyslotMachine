@@ -24,6 +24,14 @@
 // stopボタンをクリックした時の処理
       this.stop.addEventListener('click', () => {
         clearTimeout(this.timeoutId);
+
+// stopボタンを押す度に1減らす
+        panelsLeft--;
+
+// panelsLeftが0になった時に結果の判定
+        if (panelsLeft === 0) {
+          checkResult();
+        }
       });
 
 // imgとstopをsectionの子要素として追加
@@ -56,6 +64,33 @@
         this.spin();
       }, 50);
     }
+
+// 比較するパネルはp1とp2で受け取る
+    isUnmatched(p1, p2) {
+// イメージのソース属性が他の２つの異なっている場合はtrueを返してそうでない場合はfalseを返す
+      return this.img.src !== p1.img.src && this.img.src !== p2.img.src;
+    }
+
+// unmatch()メソッドthis.imgに対してunmatchedクラスをつける
+    unmatch() {
+      this.img.classList.add('unmatched');
+    }
+  }
+
+// 個々のパネルに関する処理ではなくパネル同士を比較する処理
+// だからパネルクラスの外で書く
+  function checkResult() {
+// panels0が他の2つとマッチしなかった場合はunmatch()メソッドを
+// 呼び出して色を薄くする
+    if (panels[0].isUnmatched(panels[1], panels[2])) {
+      panels[0].unmatch();
+    }
+    if (panels[1].isUnmatched(panels[0], panels[2])) {
+      panels[1].unmatch();
+    }
+    if (panels[2].isUnmatched(panels[0], panels[1])) {
+      panels[2].unmatch();
+    }
   }
 
 // インスタンスの生成
@@ -64,6 +99,9 @@
     new Panel(),
     new Panel(),
   ];
+
+// 後幾つ動いているパネルが残っているか変数で保持
+  let panelsLeft = 3;
 
 // spinをクリックした時の処理
   const spin = document.getElementById('spin');

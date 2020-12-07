@@ -49,3 +49,8 @@ main {
   user-select: none;
   margin: 0 auto;
 }
+
+/* 判定結果が違うパネルの色を薄くする */
+.unmatched {
+  opacity: 0.5;
+}
