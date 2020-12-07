@@ -23,6 +23,10 @@
       this.stop.classList.add('stop');
 // stopボタンをクリックした時の処理
       this.stop.addEventListener('click', () => {
+        if (this.stop.classList.contains('inactive')) {
+          return;
+        }
+        this.stop.classList.add('inactive');
         clearTimeout(this.timeoutId);
 
 // stopボタンを押す度に1減らす
@@ -106,6 +110,11 @@
 // spinをクリックした時の処理
   const spin = document.getElementById('spin');
   spin.addEventListener('click', () => {
+// inactiveクラスが着いていたらreturnで処理を止める
+    if (spin.classList.contains('inactive')) {
+      return;
+    }
+  spin.classList.add('inactive');
 // パネルの画像を切り替える一つ一つの要素をpanelで受け取って次の処理をする
 // panelクラスのspinメソッドにまとめる
     panels.forEach(panel => {

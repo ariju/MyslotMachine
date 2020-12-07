@@ -54,3 +54,8 @@ main {
 .unmatched {
   opacity: 0.5;
 }
+
+/* spinボタンに適応 */
+.inactive {
+  opacity: 0.5;
+}
