@@ -23,6 +23,21 @@
       const main = document.querySelector('main');
       main.appendChild(section);
     }
+// getRandomImageメソッドにimagesを定義して
+// その中に配列として画像を入れてランダムに選んだ要素を返す
+    getRandomImage() {
+      const images = [
+        'img/seven.png',
+        'img/bell.png',
+        'img/cherry.png',
+      ];
+      return images[Math.floor(Math.random() * images.length)];
+    }
+// spinメソッドの定義。画像を設定
+// getRandomImageメソッドにまとめる
+    spin() {
+      this.img.src = this.getRandomImage();
+    }
   }
 
 // インスタンスの生成
@@ -31,4 +46,13 @@
     new Panel(),
     new Panel(),
   ];
+// spinをクリックした時の処理
+  const spin = document.getElementById('spin');
+  spin.addEventListener('click', () => {
+// パネルの画像を切り替える一つ一つの要素をpanelで受け取って次の処理をする
+// panelクラスのspinメソッドにまとめる
+    panels.forEach(panel => {
+      panel.spin();
+    });
+  });
 }
